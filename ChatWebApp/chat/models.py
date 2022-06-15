@@ -23,8 +23,8 @@ class Message(models.Model):
         ordering = ['timestamp']
 
     content = models.CharField(max_length=2500)
-    author = models.ForeignKey(User,on_delete=models.CASCADE,related_name="meesages",null=True,blank=True)
-    room = models.ForeignKey(ChatRoom,on_delete=models.Case,related_name="meesages",null=True,blank=True)
+    author = models.ForeignKey(User,on_delete=models.CASCADE,related_name="messages",null=True,blank=True)
+    room = models.ForeignKey(ChatRoom,on_delete=models.Case,related_name="messages",null=True,blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

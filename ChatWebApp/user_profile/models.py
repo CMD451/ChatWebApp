@@ -7,6 +7,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
+        related_name="profile"
         )
     description = models.CharField(max_length=5000,null=True)
     # profile_img = models.ImageField(upload_to="images/profile",default="/images/profile/witam/default.JPG")
