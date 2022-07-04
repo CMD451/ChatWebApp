@@ -16,12 +16,19 @@ class BaseUserSerializer(serializers.ModelSerializer):
             "username",
             "email"
         ]
-class UserProfileSerializer(serializers.ModelSerializer):
-    user = BaseUserSerializer()
+
+class ProfileSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(use_url=True,required=False)
     class Meta:
-        model = UserProfile
+        model=UserProfile
         fields = '__all__'
 
+class UserWithProfileSerialzier(serializers.ModelSerializer):
+    profile = ProfileSerializer()
+    class Meta:
+        model=User
+        fields = ['id','username','email','profile']
+        
 class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True,

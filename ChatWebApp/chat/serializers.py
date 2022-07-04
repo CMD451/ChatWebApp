@@ -3,13 +3,16 @@ from rest_framework import serializers
 
 from django.contrib.auth.models import User
 from chat.models import Message,ChatRoom
+from user_profile.serializers import UserWithProfileSerialzier
 
 class MessageSerializer(serializers.ModelSerializer):
+    author = UserWithProfileSerialzier
     class Meta:
         model=Message
         fields = '__all__'
 
 class ChatRoomSerializer(serializers.ModelSerializer):
+    creator = UserWithProfileSerialzier
     class Meta:
         model = ChatRoom
         fields = ['id','name','creator','last_meesage','members']

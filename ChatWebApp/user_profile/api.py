@@ -4,22 +4,22 @@ from rest_framework.generics import RetrieveUpdateAPIView,ListAPIView,CreateAPIV
 from rest_framework.mixins import CreateModelMixin
 from chat.paginators import StandardResultsSetPagination
 from user_profile.models import UserProfile
-from user_profile.serializers import UserProfileSerializer,UserRegisterSerializer
+from user_profile.serializers import UserRegisterSerializer,UserWithProfileSerialzier
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 
 
 class ProfileDetailView(RetrieveUpdateAPIView):
-    serializer_class = UserProfileSerializer
+    serializer_class = UserWithProfileSerialzier
     permission_classes = [IsAuthenticated]
     
     def get_object(self):
         user = self.request.user
-        return user.profile
+        return user
        
 class UserSearch(ListAPIView):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
+    queryset = User.objects.all()
+    serializer_class = UserWithProfileSerialzier
     permission_classes = [IsAuthenticated]
     pagination_class = StandardResultsSetPagination
 
@@ -28,7 +28,7 @@ class UserSearch(ListAPIView):
             return []
         phrase = self.request.GET.get('phrase')
         queryset = super().get_queryset()
-        return queryset.filter(user__username__startswith=phrase)
+        return queryset.filter(username__startswith=phrase)
 
 class UserRegisterView(CreateAPIView):
     serializer_class = UserRegisterSerializer
