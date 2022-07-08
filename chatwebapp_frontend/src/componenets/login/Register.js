@@ -13,22 +13,15 @@ export function Register(props) {
     function handleData(e) {
         addData(e.target.name, e.target.value)
     }
-    function addError(name,value){
-        let newErrors = errors
-        newErrors[name] = value
-        setErrors(newErrors)
-    }
+ 
     function isDataEmpty(dataList) {
-        let newErrors = errors
-        let empty = false
+        let newErrors = {}
         dataList.forEach((value)=>{
             if(!data.hasOwnProperty(value)){
                 newErrors[value] = "This field cannot be empty"
-                empty = true
             }
         })
-        setErrors(newErrors)
-        return empty
+        return newErrors
     }
     function submit(e) {
         e.preventDefault()
@@ -36,20 +29,24 @@ export function Register(props) {
         window.localStorage.removeItem("refresh")
         setIsLoading(true)
         //walidacja po stronie klienta
-        if(isDataEmpty(['username','password','password2'])){
-            setIsLoading(false)
-            return
-        }
-        if(data['password1']!=['password2']){
-            addError("password2","Passwords do not match")
-            setIsLoading(false)
-            return
+
+
+        let newErrors = isDataEmpty(["username","password","password2"]);
+        if(!newErrors['password2']&&!newErrors['password']){
+            if(newErrors['password1']!=newErrors['password2']){
+                newErrors['password2'] = "Passwords do not match";
+            }
         }
        
-        
+       
+        if(Object.keys(newErrors).length !== 0){
+            setErrors(newErrors)
+            setIsLoading(false)
+            return
+        }
         registerRequest(data)
             .then((response) => {
-
+                console.log(response)
                 let responseBody = response.body
                 if (response.status == 201) {
                     props.onSucces();
@@ -63,7 +60,6 @@ export function Register(props) {
                 setIsLoading(false)
             })
     }
-    console.log("re-render")
     return (
         <div className="loginDiv">
 
@@ -79,7 +75,7 @@ export function Register(props) {
 
                 <label htmlFor="password2">Repeat Password:</label><br />
                 <input type="password" name="password2" onChange={handleData} /> <br />
-                <span className="errorText">{errors['password2'] && errors['password2']}</span><br />
+                <span className="errorText"> {errors['password2'] && errors['password2']} </span><br />
 
                 {button}
                 <span className="errorText"></span>
