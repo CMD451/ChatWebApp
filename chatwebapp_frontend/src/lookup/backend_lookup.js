@@ -39,15 +39,15 @@ export async function fetchbackendlookup(method, endpoint, data) {
   }
   let token = window.localStorage.getItem('token');
   if(token != null){
-    console.log(`JWT ${token}`)
     fetch_data['headers']['Authorization'] = `Bearer ${token}`;
   }
   if(window.localStorage.getItem('token')!=null){
 
   }
   let response = await fetch(url, fetch_data);
-  return response.json()
-}
+  let responseBody = await response.json();
+  return {status:response.status,body:responseBody}
+} 
 async function renewToken() {
   console.log("odnawianie trwa")
   const endpoint = '/api/profiles/token/refresh/';

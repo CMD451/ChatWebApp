@@ -1,0 +1,32 @@
+:root{
+    --background:#0000aa;
+    --secondary:white;
+    --main-text:#ffffff;
+    --selected:white;
+    --selected-background:var(--background);
+    --error:red;
+}
+/* :root{
+    --background:#0000aa;
+    --secondary:white;
+    --main-text:#ffff55;
+    --selected:white;
+    --selected-background:var(--background);
+    --error:red;
+
+    --choice-background:#0000aa;
+    --choice-secondary:white;
+    --choice-text:#ffff55;
+    --choice-selected:white;
+    --choice-selected-background:var(--background);
+} */
+.container{
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    
+   
+}
+body{
+    background-color: var(--background);
+}

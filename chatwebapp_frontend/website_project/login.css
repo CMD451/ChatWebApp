@@ -1,0 +1,92 @@
+.parentDiv{
+    width: fit-content;
+    margin: auto;
+    margin-top: 10em;
+}
+.loginDiv {
+    margin: auto;
+    background-color: var(--background);
+    width: fit-content;
+    border: double 0.3em var(--secondary);
+    height: 15em;
+    padding: 3em;
+    color: var(--main-text)
+}
+form{
+    display: block;
+}
+input{
+    padding: 0.1em;
+    display: inline-block;
+    box-sizing: border-box;
+    border: 0.1em solid var(--secondary);
+    color: var(--secondary);
+    background-color: var(--background);
+    margin: 0.2em;
+    margin-top: 0.3em;
+    width: 30em;
+    height: 2em;
+    font-size: 1.2em;
+}
+label{
+    font-weight: bold;
+    margin-top: 0.4em;
+    font-size: 1em;
+    padding-bottom: 0.4em;
+}
+.loginTitle{
+    font-size: 2em;
+    display: block;
+    padding-bottom: 0.5em;
+}
+
+button {
+    padding: 0.3em;
+    width: 100%;
+    margin-top: 0.6em;
+    color: var(--background);
+    font-size: 1.2em;
+    background-color: var(--main-text);
+    border:var(--secondary) double 1px;
+    
+}
+button:hover{
+    background-color: var(--selected-background);
+    color:var(--selected)
+}
+.loginBottomText{
+    display: block;
+    margin-top: 0.4em;
+    font-weight: bold;
+    color:var(--error);
+}
+
+.menu{
+    width: 42.78em;
+    border: 0.15em var(--secondary) solid;
+    border-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+}
+.menuOption{
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    background-color: var(--background);
+    color: var(--secondary);
+    cursor: pointer;
+}
+.menuOption:hover{
+    background-color: var(--secondary);
+    color: var(--background);
+}
+.menuOptionSpan{
+    display: block;
+    font-size: 1.5em;
+    padding: 0.2em;
+}
+
+.selectedMenuOption{
+    background-color: var(--secondary);
+    color: var(--background);
+}
