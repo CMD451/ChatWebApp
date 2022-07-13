@@ -5,6 +5,16 @@
     --selected:white;
     --selected-background:var(--background);
     --error:red;
+
+    --choice-background:#0000aa;
+    --choice-secondary:#0000aa;
+    --choice-text:#ffff55;
+    --choice-selected:white;
+    --choice-selected-background:var(--background);
+}
+body{
+    margin: 0;
+    padding: 0;
 }
 /* :root{
     --background:#0000aa;
