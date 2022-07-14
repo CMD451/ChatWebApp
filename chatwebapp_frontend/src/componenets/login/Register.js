@@ -46,7 +46,6 @@ export function Register(props) {
         }
         registerRequest(data)
             .then((response) => {
-                console.log(response)
                 let responseBody = response.body
                 if (response.status == 201) {
                     props.onSucces();

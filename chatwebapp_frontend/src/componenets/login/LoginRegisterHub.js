@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Login } from './Login';
 import { Register } from './Register';
 import './login.css'
+import { useNavigate } from 'react-router-dom';
 
-export function LoginRegisterHub() {
+export function LoginRegisterHub(props) {
     const [active, setActive] = useState(0)
+    let navigate = useNavigate();
 
     const options = [
-        { name: "Login", value: <Login/> },
+        { name: "Login", value: <Login onSucces={redirectToMain}/> },
         { name: "Register", value: <Register onSucces={setLoginActive}/> }
     ]
 
@@ -16,6 +18,9 @@ export function LoginRegisterHub() {
     }
     function setLoginActive(){
         setActive(0)
+    }
+    function redirectToMain(){
+        navigate("/chat");
     }
 
     let options_jsx = options.map((element, index) => {

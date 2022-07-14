@@ -38,6 +38,7 @@ export async function fetchbackendlookup(method, endpoint, data) {
     fetch_data['headers']['X-CSRFToken'] = csrftoken;
   }
   let token = window.localStorage.getItem('token');
+  console.log(token)
   if(token != null){
     fetch_data['headers']['Authorization'] = `Bearer ${token}`;
   }
@@ -78,7 +79,7 @@ async function renewTokenIfexpired() {
     }
   }
   //przekieruj do strony logowania
-  console.log("przekieruj do logowania")
+  console.log("przekieruj do logowania--renewToken")
 }
 export async function token_backend_lookup(method, endpoint, data){
   await renewTokenIfexpired()

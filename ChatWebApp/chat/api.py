@@ -1,3 +1,4 @@
+from asyncio import constants
 from urllib import request
 from django.shortcuts import get_object_or_404, render
 from chat.models import ChatRoom, Message
@@ -23,6 +24,7 @@ class ChatRoomViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return self.request.user.rooms.all()
+        
   
 
 class MessageDetailView(RetrieveUpdateDestroyAPIView):

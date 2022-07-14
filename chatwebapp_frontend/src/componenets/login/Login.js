@@ -4,7 +4,8 @@ import {returnWaitIfLoading} from '../util/util';
 import {loginRequest} from '../../lookup/lookup';
 import './login.css'
 
-export function Login() {
+
+export function Login(props) {
     const [error,setError] = useState("")
     const [isLoading,setIsLoading] = useState(false)
     const [data,addData] = useFormData()
@@ -12,6 +13,7 @@ export function Login() {
     function handleData(e){
         addData(e.target.name,e.target.value)
     }
+ 
     function submit(e){
         // walidacja po stronie klienta
         // tu winna się znaleść
@@ -24,7 +26,8 @@ export function Login() {
             if(response.status == 200){
                 window.localStorage.setItem("token",responseBody['access'])
                 window.localStorage.setItem("refresh",responseBody['refresh'])
-                console.log("Przenieś do strony głównej")
+
+                props.onSucces();
             }
             setError("Incorrect username or password.")
             setIsLoading(false)
