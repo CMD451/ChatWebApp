@@ -11,7 +11,7 @@ export function ChatItem(props) {
         className += " activeMenuItem"
     }
     return (
-       <div className={className} key={props.key} onClick={handleChatClick}>
+       <div className={className} onClick={handleChatClick}>
             <span>{props.name}</span>
        </div>
     );

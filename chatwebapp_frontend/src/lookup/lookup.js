@@ -13,3 +13,7 @@ export async function getUserChatRooms(page){
     const endpoint = `/api/chat/room/?page=${page}`
     return await token_backend_lookup("GET",endpoint,null)
 }
+export async function searchForUsers(username,page){
+    const endpoint = `/api/profiles/search/?phrase=${username}&page=${page}`
+    return await token_backend_lookup("GET",endpoint,null)
+}

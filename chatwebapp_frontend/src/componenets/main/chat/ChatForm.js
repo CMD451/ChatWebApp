@@ -1,14 +1,13 @@
 import { useEffect, useState ,ReactDOM} from "react";
 import React from 'react';
 
-export function ChatContent(props) {
-  
+export function ChatForm(props) {
   
     return (
        <div>
-            Chat content
+            Chat form
        </div>
     );
 }
 
-export default ChatContent;
+export default ChatForm;

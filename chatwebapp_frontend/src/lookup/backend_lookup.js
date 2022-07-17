@@ -1,5 +1,7 @@
 
 import { isExpired} from "react-jwt";
+import { useNavigate } from 'react-router-dom';
+
 
 function getCookie(name) {
   let cookieValue = null;
@@ -38,7 +40,6 @@ export async function fetchbackendlookup(method, endpoint, data) {
     fetch_data['headers']['X-CSRFToken'] = csrftoken;
   }
   let token = window.localStorage.getItem('token');
-  console.log(token)
   if(token != null){
     fetch_data['headers']['Authorization'] = `Bearer ${token}`;
   }
@@ -56,8 +57,8 @@ async function renewToken() {
   const data = { 'refresh': refresh }
 
   let response = await fetchbackendlookup("POST", endpoint, data)
-  if (response['access']) {
-    window.localStorage.setItem("token", response['access'])
+  if (response['body']['access']) {
+    window.localStorage.setItem("token", response['body']['access'])
     return true
   }
   window.localStorage.removeItem('token')
