@@ -5,21 +5,24 @@ import { ChatItem } from "./ChatItem";
 
 
 export function ChatList(props) {
-    const [active,setActive] = useState(0)
+    const [active, setActive] = useState(0)
 
-    function onChangeActive(index){
+    function onChangeActive(index) {
         props.onChatChange(index);
         setActive(index)
+    }
+    function handleCreateButton(e){
+        props.changeContentOption("create")
     }
     function generateList() {
         let list = props.chats.map((value, index) => {
             let isActive = false;
-            if(index == active){
-                isActive= true
+            if (index == active) {
+                isActive = true
             }
             return (
                 <ChatItem key={value.id} index={index} name={value.name}
-                 isActive={isActive} onChangeActive={onChangeActive}/>
+                    isActive={isActive} onChangeActive={onChangeActive} />
             )
         })
         return list;
@@ -30,7 +33,9 @@ export function ChatList(props) {
     const list = generateList()
     return (
         <React.Fragment>
-            
+            <div className="menuItem">
+                <button onClick={handleCreateButton}>Stwórz nowy chat</button>
+            </div>
             {list}
         </React.Fragment>
     );

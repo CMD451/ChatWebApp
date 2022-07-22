@@ -23,6 +23,11 @@ export function ChatHub() {
     function handleChatClick(index)
     {
         setActive(index)
+        selectOption("chat")
+        
+    }
+    function changeContentOption(key){
+        selectOption(key)
     }
     function loadChats() {
         if(currentPage != null){
@@ -48,7 +53,7 @@ export function ChatHub() {
         return options[selectedOption]
     }
     const chatList = returnWaitIfLoading(isLoading,(
-        <ChatList onChatChange={handleChatClick} chats={chats} />
+        <ChatList onChatChange={handleChatClick} changeContentOption={changeContentOption} chats={chats} />
     ))
     const mainContent = generateMainContent()
     
@@ -58,8 +63,7 @@ export function ChatHub() {
                {chatList}
             </div>
             <div class="chat">
-                {/* {mainContent} */}
-                <UsersSelect/>
+                {mainContent}
             </div>
         </React.Fragment>
     );

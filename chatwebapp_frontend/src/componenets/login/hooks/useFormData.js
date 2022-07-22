@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 export function useFormData(){
     const [data,setData] = useState({})
     function addData(name,value){

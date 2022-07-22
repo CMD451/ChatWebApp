@@ -19,6 +19,11 @@ class ChatRoomSerializer(serializers.ModelSerializer):
 
     def create(self,validated_data):
         room = super().create(validated_data)
+        # request = self.context.get('request', None)
+        # if request:
+        #     user = request.user
+        #     room.creator = user
+        #     room.members.add(room.creator)
         room.members.add(room.creator)
         return room
 

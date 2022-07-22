@@ -8,13 +8,12 @@ import AsyncSelect from 'react-select/async';
 export function UsersSelect(props) {
     const [users, setUsers] = useState([])
     const [selectedOptions, setSelectedOptions] = useState([])
-    if (props.users) {
-        setSelectedOptions(users)
-    }
+
     const [page, setPage] = useState(1);
     const [username, setUsername] = useState("")
     const [lastUsername, setLastUsername] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+
 
     function loadUsers(username) {
         let request_page = 1;
@@ -44,6 +43,11 @@ export function UsersSelect(props) {
             return { value: value.id, label: value.username }
         })
     }
+    function optionsToUsers(optionsArray) {
+        return optionsArray.map((value) => {
+            return value.value
+        })
+    }
     async function loadOptions() {
         await loadUsers(username);
         let options = usersToOptions(users)
@@ -63,8 +67,8 @@ export function UsersSelect(props) {
                 new_options = []
                 break;
             case 'remove-value':
-                e = e.filter((value)=>{
-                    if(value.value == action.removedValue.value){
+                e = e.filter((value) => {
+                    if (value.value == action.removedValue.value) {
                         return false
                     }
                     return true
@@ -73,13 +77,16 @@ export function UsersSelect(props) {
                 break;
         }
         setSelectedOptions(new_options);
+        if (props.onUsersChange) {
+            props.onUsersChange(optionsToUsers(new_options))
+        }
     }
     useEffect(() => {
-        if(props.initial){
+        if (props.initial) {
             let initalOptions = usersToOptions(props.initial)
             setSelectedOptions(initalOptions)
         }
-      }, []);
+    }, []);
     return (
         <div className="parentDiv">
             UsersSelect
