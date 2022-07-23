@@ -18,8 +18,15 @@ export function ChatHub() {
     const [active,setActive] = useState(0)
     const activeChat = chats[active]
     const [selectedOption,selectOption] = useState("chat");
-    const options = { "edit": <ChatForm data={activeChat} edit={true}/>,"create":<ChatForm/>,"chat":<ChatContent/>}
+    const options = { "edit": <ChatForm data={activeChat} edit={true} />,"create":<ChatForm onCreate={handleChatRoomCreate} />,"chat":<ChatContent/>}
    
+    function handleChatRoomCreate(new_chat){
+        let newChats = chats
+        newChats.unshift(new_chat)
+        setChats(newChats)
+        setActive(0)
+        selectOption("chat")
+    }
     function handleChatClick(index)
     {
         setActive(index)

@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 export function useErrorManager(){
     const [errors,setErrors] = useState({})
     function addError(name,value){
-        let newData = data
+        let newData = errors
         newData[name] = value
         setErrors(newData)
     }
     function clear(){
         setErrors({})
     }
-    return [errors,addError,clear]
+    function replaceErrors(errors){
+        setErrors(errors)
+    }
+    return [errors,addError,clear,replaceErrors]
 }

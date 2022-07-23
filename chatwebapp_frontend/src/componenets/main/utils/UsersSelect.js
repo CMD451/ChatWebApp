@@ -6,6 +6,8 @@ import Async, { useAsync } from 'react-select/async';
 import AsyncSelect from 'react-select/async';
 
 export function UsersSelect(props) {
+    //todo 
+    //reduce amount of requests
     const [users, setUsers] = useState([])
     const [selectedOptions, setSelectedOptions] = useState([])
 
