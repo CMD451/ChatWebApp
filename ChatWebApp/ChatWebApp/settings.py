@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'faker',
     'factory',
-    'corsheaders'
+    'corsheaders',
+     'channels',
 ]
 
 #dodałem 'corsheaders.middleware.CorsMiddleware',
@@ -167,3 +168,5 @@ CORS_ALLOW_METHODS = (
         'DELETE',
         'OPTIONS'
     )
+    # Channels
+ASGI_APPLICATION = 'ChatWebApp.asgi.application'

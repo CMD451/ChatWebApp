@@ -1,6 +1,5 @@
 from faker import Faker
 import factory
-from user_profile.factory import UserFactory,ProfileFactory
 from django.contrib.auth.models import User
 import random
 from chat.models import Message,ChatRoom
