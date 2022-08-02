@@ -1,4 +1,5 @@
 import ReconnectingWebSocket from 'reconnecting-websocket';
+import { renewTokenIfexpired } from "../lookup/backend_lookup"
 
 class WebSocketService {
     static instance = null
@@ -11,31 +12,59 @@ class WebSocketService {
         }
         return this.instance
     }
-    connect(chatId) {
-        let url = `ws://127.0.0.1:8000/ws/chatroom/${chatId}/`
+    async connect(chatId) {
+        await renewTokenIfexpired()
+        console.log("connect in progress")
+        console.log(`socket_ref = ${this.socket_ref}`)
+        if (this.socket_ref !== null) {
+            this.disconnect()
+        }
+        let token = window.localStorage.getItem("token")
+        let url = `ws://127.0.0.1:8000/ws/chatroom/${chatId}/?token=${token}`
+        console.log(url)
         this.socket_ref = new ReconnectingWebSocket(url)
+        console.log(this.socket_ref)
 
-        this.socketRef.onopen = () => {
+        this.socket_ref.onopen = () => {
             console.log("WebSocket open");
         };
-        this.socketRef.onmessage = e => {
+        this.socket_ref.onmessage = e => {
             this.handleOnMessage(e.data);
         };
-        this.socketRef.onerror = e => {
+        this.socket_ref.onerror = e => {
             console.log(e.message);
         };
-        this.socketRef.onclose = () => {
-            console.log("WebSocket closed let's reopen");
-            this.connect();
+        this.socket_ref.onclose = () => {
+            // console.log("WebSocket closed let's reopen");
+            // this.connect(chatId);
         };
-
-
     }
     disconnect() {
-        this.socketRef.close();
-      }
-    handleOnMessage(text_data){
+        this.socket_ref.close();
+        this.socket_ref = null;
+    }
+    handleOnMessage(text_data) {
         console.log(text_data)
+    }
+    newMessage(content, roomId) {
+        let message = {
+            'content': content,
+            'room': roomId
+        }
+        let data = {
+            'message': message
+        }
+        this.sendMessage(data)
+    }
+    sendMessage(data) {
+        let json_data = JSON.stringify({ ...data })
+        try {
+            this.socket_ref.send(json_data)
+        }
+        catch (error) {
+            console.log(error)
+        }
+
     }
 }
 const WebSocketInstance = WebSocketService.getInstance();

@@ -66,10 +66,11 @@ async function renewToken() {
   return false
 }
 
-async function renewTokenIfexpired() {
+export async function renewTokenIfexpired() {
   let token = window.localStorage.getItem("token")
   if (token != null) {
     if (isExpired(token)) {
+      console.log("odnawianie tokenu")
       let status = await renewToken()
       if (status) {
         return

@@ -3,12 +3,16 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from chat.serializers import MessageSerializer
+from user_profile.serializers import ProfileSerializer
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_pk = self.scope['url_route']['kwargs']['pk']
-        print(self.scope['user'].username)
         self.room_group_name = 'chat_room_%s' % self.room_pk
+        self.user = self.scope["user"]
+
+        if(self.user == None):
+             self.close()
 
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -26,7 +30,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         json_data = json.loads(text_data)
         message = json_data['message']
-
+        print(self.scope['user'])
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -39,21 +43,27 @@ class ChatConsumer(AsyncWebsocketConsumer):
  
     async def chat_message(self, event):
         message = event['message']
-
+        author = await self.getUserProfileInJson()
+        message['author'] = author
         await self.send(text_data=json.dumps({
             'message': message
         }))
-    
+
+    @database_sync_to_async
+    def getUserProfileInJson(self):
+        return ProfileSerializer(self.user.profile).data
+
     @database_sync_to_async
     def postMessage(self,messageJson):
-        #todo
-        #make authentication required
-        author = self.scope["user"].pk
-        room = self.room_pk
+        return 
+        # #todo
+        # #make authentication required
+        # # author = self.scope["user"].pk
+        # room = self.room_pk
 
-        #change to serializer
-        print(messageJson)
-    
+        # #change to serializer
+        # print(messageJson)
+   
 
   
 

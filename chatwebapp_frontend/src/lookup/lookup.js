@@ -10,7 +10,7 @@ export async function registerRequest(data){
 }
 export async function getCurrentUser(){
     const endpoint = "/api/profiles/";
-    return await fetchbackendlookup("GET",endpoint,null)
+    return await token_backend_lookup("GET",endpoint,null)
 }
 export async function getUserChatRooms(page){
     //todo pagination

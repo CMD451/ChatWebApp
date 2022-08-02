@@ -28,9 +28,9 @@ export function Hub() {
 
     }
     return (
-        <div class="content">
-            <div class="navbar">
-                <div class="navbar-item" onClick={singOut}>
+        <div className="content">
+            <div className="navbar">
+                <div className="navbar-item" onClick={singOut}>
                     <span>Sign Out</span>
                 </div>
                 <div onClick={(e) => { setActive("profile") }} class="navbar-item">
@@ -40,7 +40,7 @@ export function Hub() {
                     <span>Chat</span>
                 </div>
             </div>
-            <div class="main">
+            <div className="main">
                 <UserContext.Provider value={user}>
                     {activeOption}
                 </UserContext.Provider>

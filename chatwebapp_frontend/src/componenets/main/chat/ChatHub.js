@@ -70,10 +70,10 @@ export function ChatHub() {
     
     return (
         <React.Fragment>
-            <div class="leftMenu">
+            <div className="leftMenu">
                {chatList}
             </div>
-            <div class="chat">
+            <div className="chat">
                 {mainContent}
             </div>
         </React.Fragment>

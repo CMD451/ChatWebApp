@@ -3,7 +3,7 @@
 export function Profile() {
  
   return (
-    <div class="content">
+    <div className="content">
         Profile
     </div>
   );
