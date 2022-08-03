@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 import django.contrib.auth.password_validation as validators
 from django.core import exceptions
+from user_profile.models import *
 
 class BaseUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -61,6 +62,11 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         except exceptions.ValidationError as e:
             raise serializers.ValidationError({'password':list(e.messages)[0]}) 
         return super(UserRegisterSerializer, self).validate(data)
+
+    def save(self,**kwargs):
+        instance = super(UserRegisterSerializer,self).save(**kwargs)
+        UserProfile.objects.create(user=instance)
+        return instance
         
         
         

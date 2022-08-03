@@ -26,10 +26,10 @@ class WebSocketService {
         console.log(this.socket_ref)
 
         this.socket_ref.onopen = () => {
-            console.log("WebSocket open");
+            this.handleOnOpen();
         };
         this.socket_ref.onmessage = e => {
-            this.handleOnMessage(e.data);
+            this.handleOnMessage(JSON.parse(e.data));
         };
         this.socket_ref.onerror = e => {
             console.log(e.message);
@@ -44,7 +44,14 @@ class WebSocketService {
         this.socket_ref = null;
     }
     handleOnMessage(text_data) {
-        console.log(text_data)
+        if (this.callbacks.hasOwnProperty('onMessage')) {
+            this.callbacks['onMessage'](text_data)
+        }
+    }
+    handleOnOpen() {
+        if (this.callbacks.hasOwnProperty('onOpen')) {
+            this.callbacks['onOpen']()
+        }
     }
     newMessage(content, roomId) {
         let message = {
@@ -65,6 +72,12 @@ class WebSocketService {
             console.log(error)
         }
 
+    }
+    setOnOpenCallback(callback) {
+        this.callbacks['onOpen'] = callback
+    }
+    setOnMessageCallback(callback) {
+        this.callbacks['onMessage'] = callback
     }
 }
 const WebSocketInstance = WebSocketService.getInstance();

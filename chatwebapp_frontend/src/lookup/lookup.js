@@ -12,8 +12,11 @@ export async function getCurrentUser(){
     const endpoint = "/api/profiles/";
     return await token_backend_lookup("GET",endpoint,null)
 }
+export async function getChatRoomMessages(chatId,page){
+   const endpoint = `/api/chat/messages/?id=${chatId}&page=${page}`
+   return await token_backend_lookup("GET",endpoint,null)
+}
 export async function getUserChatRooms(page){
-    //todo pagination
     const endpoint = `/api/chat/room/?page=${page}`
     return await token_backend_lookup("GET",endpoint,null)
 }

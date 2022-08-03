@@ -3,8 +3,16 @@ import factory
 from django.contrib.auth.models import User
 import random
 from chat.models import Message,ChatRoom
+from user_profile.factory import ProfileFactory
 fake = Faker()
 
+def populateDb():
+    for x in range(10):
+        profile = ProfileFactory()
+        profile.save()
+    for x in range(5):
+        room = ChatRoomFactory(members=4)
+        room.save()
 def toId(list):
     ids = []
     for item in list:

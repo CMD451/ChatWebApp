@@ -12,7 +12,7 @@
     color: var(--secondary);
     font-weight: bolder;
 }
-.navbar-item:hover{
+.navbar-item:hover,.selected-navbar-item{
     background-color: var(--secondary);
     color: var(--background);
 }
@@ -23,6 +23,7 @@
     width: 5em;
     padding: 1em;
 }
+
 .content{
     
     margin: auto;
@@ -79,4 +80,11 @@
 }
 .tr,.td{
     border: solid white 2px;
+}
+p{
+    color: white;
+    font-weight: bold;
+}
+.chat{
+    overflow-y: scroll;
 }
