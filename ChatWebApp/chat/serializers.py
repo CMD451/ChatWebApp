@@ -8,9 +8,13 @@ from user_profile.serializers import UserWithProfileSerialzier
 class MessageSerializer(serializers.ModelSerializer):
     author = UserWithProfileSerialzier()
     class Meta:
-        model=Message
-        fields = '__all__'
-
+        model= Message
+        fields = ['content','author','timestamp','room']
+    
+class NewMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Message
+        fields = ['content','author','timestamp','room']
 class ChatRoomSerializer(serializers.ModelSerializer):
     creator = UserWithProfileSerialzier
     class Meta:

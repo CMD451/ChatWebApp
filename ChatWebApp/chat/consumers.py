@@ -3,7 +3,7 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 import constantly
-from chat.serializers import MessageSerializer
+from chat.serializers import MessageSerializer,NewMessageSerializer
 from user_profile.serializers import UserWithProfileSerialzier
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -33,6 +33,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         json_data = json.loads(text_data)
         message = json_data['message']
         author = await self.getUserProfileInJson()
+        print(author)
         message['author'] = author
         await self.channel_layer.group_send(
             self.room_group_name,
@@ -57,7 +58,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def postMessage(self,messageJson):   
         messageJson['author'] = messageJson['author']['id']
-        serializer = MessageSerializer(data=messageJson)
+        print(messageJson)
+        serializer = NewMessageSerializer(data=messageJson)
         if serializer.is_valid():
             serializer.save()
         else:

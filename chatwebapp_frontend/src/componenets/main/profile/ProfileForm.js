@@ -1,7 +1,7 @@
 import { useEffect, useState, ReactDOM } from "react";
 import { useFormData } from "../../login/hooks/useFormData";
 import { useErrorManager } from '../utils/hooks/useErrorManager';
-import { returnWaitIfLoading } from "../../util/util";
+import { returnWaitIfLoading,setTheme } from "../../util/util";
 import { updateProfile } from "../../../lookup/lookup";
 
 export function ProfileForm(props){
@@ -10,15 +10,24 @@ export function ProfileForm(props){
     const [data, addData] = useFormData()
 
 
-   
-
+    function validateData(){
+        return true
+    }
     function updateProfileRequest(){
-        const profileId = props.userData.profile.id
-        console.log(data)
-        let dataD = {'profile':data}
-        updateProfile(dataD)
+        if(!validateData){
+            return 
+        }
+        let requestData = {'profile':data}
+        updateProfile(requestData)
         .then((response)=>{
-            console.log(response)
+            const status = response.status
+            const body = response.body
+            if(status === 200){
+               const profile = body.profile
+               setTheme(profile.backgroundColor,profile.secondaryColor);
+               return
+            }
+            console.log(body)
         })
     }
 

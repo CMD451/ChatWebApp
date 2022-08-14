@@ -9,10 +9,6 @@ export function Profile() {
   return (
     <div className="content">
         Profile
-        <img src = {user.profile.image} alt={user.username}/>
-        <p>
-          {user.profile.description}
-        </p>
         <ProfileForm userData = {user}/>
     </div>
   );

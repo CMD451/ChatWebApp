@@ -56,12 +56,13 @@ export function ChatContent(props) {
     }, [props.data.id, loadInitalMessages])
 
     const handleSendMessage = (e) => {
+        e.preventDefault()
         let content = input
         WebSocketInstance.newMessage(content, chatId)
         setInput("")
     }
     const handleMessageInput = (e) => {
-        e.target.preventDefault()
+        e.preventDefault()
         setInput(e.target.value)
     }
 
@@ -80,8 +81,6 @@ export function ChatContent(props) {
                 <input type="text" value={input} onChange={handleMessageInput} />
                 {button}
             </form>
-
-
         </div>
     );
 }

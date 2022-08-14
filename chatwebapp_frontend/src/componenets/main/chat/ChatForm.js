@@ -2,7 +2,7 @@ import { useEffect, useState, ReactDOM } from "react";
 import { useFormData } from "../../login/hooks/useFormData";
 import { useErrorManager } from '../utils/hooks/useErrorManager'
 import { createChatRoom } from "../../../lookup/lookup";
-import { returnWaitIfLoading } from "../../util/util";
+import { returnWaitIfLoading} from "../../util/util";
 import { UsersSelect } from '../utils/UsersSelect';
 import React from 'react';
 import { UserContext } from "../Hub"
@@ -31,6 +31,7 @@ export function ChatForm(props) {
 
                 if (status == 201) {
                     props.onCreate(body)
+
                     return
                 }
                 setResponseErrors(body)

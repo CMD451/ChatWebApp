@@ -15,7 +15,9 @@ export function returnLoading(){
 export function setTheme(bgColor,scColor){
     let colors = {
         'background':bgColor,
-        'secondary':scColor
+        'secondary':scColor,
+        'main-text':scColor,
+        
     }
     for (const [key, value] of Object.entries(colors)) {
         document.documentElement.style.setProperty(`--${key}`, value);

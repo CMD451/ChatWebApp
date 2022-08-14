@@ -1,3 +1,4 @@
+
 .navbar{
     display: flex;
     flex-direction: row-reverse;
@@ -76,18 +77,19 @@
 .leftMenu:first-child{
     margin-top: 0%;
 }
-.activeMenuItem{
-    border: dotted var(--background) 0.1em;
-    background-color: var(--secondary);
-    color: var(--background) ;
-}
+
 .tr,.td{
-    border: solid white 2px;
+    border: solid var(--secondary 2px);
 }
 p{
-    color: white;
+    color: var(--secondary);
     font-weight: bold;
 }
 .chat{
     overflow-y: scroll;
+}
+.activeMenuItem{
+    border: dotted var(--background) 0.1em;
+    background-color: var(--secondary);
+    color: var(--background) !important;
 }

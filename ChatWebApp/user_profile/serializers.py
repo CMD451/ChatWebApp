@@ -11,7 +11,7 @@ from user_profile.models import *
 
 class BaseUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model=User
+        model= User
         fields = [
             "id",
             "username",
@@ -37,8 +37,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 class UserWithProfileSerialzier(serializers.ModelSerializer):
     profile = ProfileSerializer()
     class Meta:
-        model=User
-        fields = ['id','username','email','profile']
+        model = User
+        fields = ['id','username','profile']
 
     def update(self,instance,validated_data):
         print(validated_data)
