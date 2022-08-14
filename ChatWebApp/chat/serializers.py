@@ -12,7 +12,7 @@ class MessageSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ChatRoomSerializer(serializers.ModelSerializer):
-    creator = UserWithProfileSerialzier()
+    creator = UserWithProfileSerialzier
     class Meta:
         model = ChatRoom
         fields = ['id','name','creator','last_meesage','members']

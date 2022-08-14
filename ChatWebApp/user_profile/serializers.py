@@ -18,17 +18,39 @@ class BaseUserSerializer(serializers.ModelSerializer):
             "email"
         ]
 
+class ProfileImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(use_url=True,required=True)
+    class Meta:
+        model=UserProfile
+        fields = ['image']
 class ProfileSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(use_url=True,required=False)
     class Meta:
         model=UserProfile
-        fields = '__all__'
+        fields = [
+            'image',
+            'description',
+            'backgroundColor',
+            'secondaryColor'
+        ]
 
 class UserWithProfileSerialzier(serializers.ModelSerializer):
     profile = ProfileSerializer()
     class Meta:
         model=User
         fields = ['id','username','email','profile']
+
+    def update(self,instance,validated_data):
+        print(validated_data)
+        if(validated_data['profile']):
+            profile = ProfileSerializer(instance=instance.profile,data=validated_data['profile'])
+            try:
+                profile.is_valid(raise_exception = True)
+                profile.save()
+            except Exception as e:
+                 raise serializers.ValidationError(e)
+            del validated_data['profile']
+        return super(UserWithProfileSerialzier, self).update(instance,validated_data)
         
 class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
@@ -48,10 +70,10 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         validated_data['password'] = make_password(validated_data.get('password'))
         return super(UserRegisterSerializer, self).create(validated_data)
 
-    def update(self,validated_data):
+    def update(self,instance,validated_data):
         if validated_data['password']:
             validated_data['password'] = make_password(validated_data.get('password'))
-        return super(UserRegisterSerializer, self).update(validated_data)
+        return super(UserRegisterSerializer, self).update(instance,validated_data)
 
   
     def validate(self, data):

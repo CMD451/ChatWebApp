@@ -1,7 +1,7 @@
 import './main.css'
 import { ChatHub } from './chat/ChatHub'
 import { Profile } from './profile/Profile'
-import { returnLoading } from '../util/util';
+import { returnLoading,setTheme } from '../util/util';
 import { useEffect, useState } from "react";
 import { getCurrentUser } from '../../lookup/lookup';
 import React from 'react';
@@ -19,8 +19,12 @@ export function Hub() {
     useEffect(() => {
         getCurrentUser()
             .then((response) => {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     setUser(response.body)
+                    const profile = response.body.profile
+                    console.log("setting theme")
+                    setTheme(profile.backgroundColor,profile.secondaryColor)
+                    console.log(document.documentElement)
                     setIsLoading(false)
                 }
             })

@@ -2,6 +2,7 @@ import { useEffect, useState, ReactDOM, useCallback } from "react";
 import React from 'react';
 import WebSocketInstance from "../../../websocket/websocket"
 import { getChatRoomMessages } from "../../../lookup/lookup"
+import { returnWaitIfLoading } from "../../util/util"
 
 export function ChatContent(props) {
     const [chatId, setChatId] = useState("")
@@ -15,21 +16,32 @@ export function ChatContent(props) {
         WebSocketInstance.setOnMessageCallback((data) => {
             setMessages(messages => [...messages, data['message']])
         })
+        WebSocketInstance.setOnOpenCallback(() => {
+            setWebSocketLoading(false)
+        })
     }
-
-    const loadMessagesFromApi = useCallback((chat_id, _page) => {
+    function loadMessagesFromApi(chat_id, _page) {
         if (_page === null) {
             return
         }
+        setApiLoading(true)
         getChatRoomMessages(chat_id, _page)
             .then((response => {
                 const status = response.status
                 if (status === 200) {
                     setMessages(messages => [...messages, ...response.body.results])
+                    setPage(response.body.next)
                 }
-                setPage(response.body.next)
+                setApiLoading(false)
             }))
+
+    }
+    const loadInitalMessages = useCallback((chat_id, _page) => {
+        loadMessagesFromApi(chat_id, _page)
     }, [])
+    const loadNextMessagePage = () => {
+        loadMessagesFromApi(chatId, page)
+    }
 
     useEffect(() => {
         setCallbacks()
@@ -40,8 +52,8 @@ export function ChatContent(props) {
         setMessages([])
         setChatId(props.data.id)
         setPage(1)
-        loadMessagesFromApi(props.data.id, 1)
-    }, [props.data.id, loadMessagesFromApi])
+        loadInitalMessages(props.data.id, 1)
+    }, [props.data.id, loadInitalMessages])
 
     const handleSendMessage = (e) => {
         let content = input
@@ -49,6 +61,7 @@ export function ChatContent(props) {
         setInput("")
     }
     const handleMessageInput = (e) => {
+        e.target.preventDefault()
         setInput(e.target.value)
     }
 
@@ -56,11 +69,18 @@ export function ChatContent(props) {
         console.log(e)
         return (<p>{e.content} ~~ {e.author.username}</p>)
     })
+    const apiLoadingTag = returnWaitIfLoading(apiLoading, null)
+    const button = returnWaitIfLoading(webSocketLoading,
+        (<button onClick={handleSendMessage} >Send Message</button>))
     return (
         <div>
+            {apiLoadingTag}
             {messages_content}
-            <input type="text" value={input} onChange={handleMessageInput} />
-            <button onClick={handleSendMessage} >Send Message</button>
+            <form>
+                <input type="text" value={input} onChange={handleMessageInput} />
+                {button}
+            </form>
+
 
         </div>
     );

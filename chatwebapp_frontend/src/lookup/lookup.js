@@ -28,3 +28,7 @@ export async function createChatRoom(data){
     const endpoint = '/api/chat/room/'
     return await token_backend_lookup("POST",endpoint,data)
 }
+export async function updateProfile(data){
+    const endpoint = '/api/profiles/';
+    return await token_backend_lookup("PATCH",endpoint,data)
+}
