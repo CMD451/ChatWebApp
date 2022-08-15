@@ -19,7 +19,7 @@ function getCookie(name) {
   return cookieValue;
 }
 
-export async function fetchbackendlookup(method, endpoint, data) {
+export async function fetchbackendlookup(method, endpoint, data,isFormData) {
   const url = `http://127.0.0.1:8000${endpoint}`;
   let fetch_data = {
     method: method,
@@ -27,13 +27,19 @@ export async function fetchbackendlookup(method, endpoint, data) {
     cache: 'no-cache',
     credentials: 'same-origin',
     headers: {
-      'Content-Type': 'application/json'
+      
     },
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
   };
   if (data) {
-    fetch_data['body'] = JSON.stringify(data);
+    if(isFormData){
+      fetch_data['body'] = data
+    }
+    else{
+      fetch_data['headers']['Content-Type'] = 'application/json'
+      fetch_data['body'] = JSON.stringify(data);
+    }
   }
   let csrftoken = getCookie('csrftoken')
   if (csrftoken) {
@@ -85,5 +91,9 @@ export async function renewTokenIfexpired() {
 }
 export async function token_backend_lookup(method, endpoint, data){
   await renewTokenIfexpired()
-  return await fetchbackendlookup(method,endpoint,data)
+  return await fetchbackendlookup(method,endpoint,data,false)
+}
+export async function token_backend_formData_lookup(method, endpoint, data){
+  await renewTokenIfexpired()
+  return await fetchbackendlookup(method,endpoint,data,true)
 }

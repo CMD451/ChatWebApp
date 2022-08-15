@@ -1,4 +1,4 @@
-import { fetchbackendlookup,token_backend_lookup } from "./backend_lookup";
+import { fetchbackendlookup,token_backend_formData_lookup,token_backend_lookup } from "./backend_lookup";
 
 export async function loginRequest(data){
     const endpoint = "/api/profiles/token/";
@@ -31,4 +31,8 @@ export async function createChatRoom(data){
 export async function updateProfile(data){
     const endpoint = '/api/profiles/';
     return await token_backend_lookup("PATCH",endpoint,data)
+}
+export async function uploadProfileImage(data){
+    const endpoint = '/api/profiles/image/';
+    return await token_backend_formData_lookup("PATCH",endpoint,data)
 }

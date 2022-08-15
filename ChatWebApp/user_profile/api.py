@@ -16,7 +16,7 @@ class ProfileDetailView(RetrieveUpdateAPIView):
     def get_object(self):
         user = self.request.user
         return user
-class ProfileImageUploadView(APIView,UpdateModelMixin):
+class ProfileImageUploadView(RetrieveUpdateAPIView):
     serializer_class = ProfileImageSerializer
     permission_classes = [IsAuthenticated]
 

@@ -6,7 +6,11 @@ import { useEffect, useState } from "react";
 import { getCurrentUser } from '../../lookup/lookup';
 import React from 'react';
 
-export const UserContext = React.createContext({});
+export const UserContext = React.createContext({
+    user:null,
+    setUser:() => {}
+
+});
 export function Hub() {
 
 
@@ -45,7 +49,6 @@ export function Hub() {
             )
         })
     }
-
     return (
         <div className="content">
             <div className="navbar">
@@ -53,15 +56,9 @@ export function Hub() {
                     <span>Sign Out</span>
                 </div>
                 {generateOptions()}
-                {/* <div onClick={(e) => { setActive("profile") }} className="navbar-item">
-                    <span>Profile</span>
-                </div>
-                <div onClick={(e) => { setActive("chat") }} className="navbar-item">
-                    <span>Chat</span>
-                </div> */}
             </div>
             <div className="main">
-                <UserContext.Provider value={user}>
+                <UserContext.Provider value={{user,setUser}}>
                     {activeOption}
                 </UserContext.Provider>
             </div>

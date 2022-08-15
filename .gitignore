@@ -144,3 +144,6 @@ yarn-debug.log*
 yarn-error.log*
 /.changelog
 .npm/
+
+#static
+profile_images/

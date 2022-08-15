@@ -42,7 +42,7 @@ class UserWithProfileSerialzier(serializers.ModelSerializer):
 
     def update(self,instance,validated_data):
         print(validated_data)
-        if(validated_data['profile']):
+        if('profile' in validated_data):
             profile = ProfileSerializer(instance=instance.profile,data=validated_data['profile'])
             try:
                 profile.is_valid(raise_exception = True)
@@ -71,7 +71,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return super(UserRegisterSerializer, self).create(validated_data)
 
     def update(self,instance,validated_data):
-        if validated_data['password']:
+        if 'password' in validated_data:
             validated_data['password'] = make_password(validated_data.get('password'))
         return super(UserRegisterSerializer, self).update(instance,validated_data)
 
