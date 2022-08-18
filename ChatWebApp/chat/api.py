@@ -2,7 +2,7 @@ from asyncio import constants
 from urllib import request
 from django.shortcuts import get_object_or_404, render
 from chat.models import ChatRoom, Message
-from chat.serializers import ChatRoomSerializer,MessageSerializer
+from chat.serializers import ChatRoomSerializer,MessageSerializer,GetChatRoomSerializer
 from rest_framework import parsers,generics, permissions, pagination,decorators,viewsets
 from rest_framework.generics import RetrieveUpdateDestroyAPIView,ListAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -16,6 +16,14 @@ class ChatRoomViewSet(viewsets.ModelViewSet):
     serializer_class = ChatRoomSerializer
     pagination_class = StandardResultsSetPagination
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        try:
+            if(self.action == "list"):
+                return GetChatRoomSerializer
+        except:
+            pass
+        return super(ChatRoomViewSet, self).get_serializer_class()
 
     def paginate_queryset(self, queryset):
         if self.paginator and self.request.query_params.get(self.paginator.page_query_param, None) is None:

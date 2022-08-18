@@ -6,5 +6,5 @@ export function useFormData(){
         newData[name] = value
         setData(newData)
     }
-    return [data,addData]
+    return [data,addData,setData]
 }

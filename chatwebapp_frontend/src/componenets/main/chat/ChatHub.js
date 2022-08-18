@@ -18,7 +18,11 @@ export function ChatHub() {
     const [active,setActive] = useState(0)
     const activeChat = chats[active]
     const [selectedOption,selectOption] = useState("chat");
-    const options = { "edit": <ChatForm data={activeChat} edit={true} />,"create":<ChatForm onCreate={handleChatRoomCreate} />,"chat":<ChatContent data={activeChat}/>}
+    const options = {
+        "edit": <ChatForm onUpdate={handleChatRoomUpdate} data={activeChat} edit={true} />,
+        "create":<ChatForm onCreate={handleChatRoomCreate} />,
+        "chat":<ChatContent changeContentOption={changeContentOption} data={activeChat}/>
+    }
    
     function handleChatRoomCreate(new_chat){
         let newChats = chats
@@ -26,6 +30,13 @@ export function ChatHub() {
         setChats(newChats)
         setActive(0)
         selectOption("chat")
+    }
+    function handleChatRoomUpdate(updated_chat){
+        let new_chats = chats
+        new_chats[active] = updated_chat
+        setChats(new_chats)
+        selectOption("chat")
+
     }
     function handleChatClick(index)
     {
@@ -40,7 +51,6 @@ export function ChatHub() {
         if(currentPage != null){
             getUserChatRooms(currentPage)
             .then((response) => {
-                console.log("Zapytanie")
                 const status = response.status;
                 if (status == 200) {
                     setPage(response.next)

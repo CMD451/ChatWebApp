@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'factory',
     'corsheaders',
     'channels',
-    'colorfield'
+    'colorfield',
+    'django_cleanup.apps.CleanupConfig'
 ]
 
 #dodałem 'corsheaders.middleware.CorsMiddleware',

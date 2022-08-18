@@ -55,6 +55,9 @@ export function ChatContent(props) {
         loadInitalMessages(props.data.id, 1)
     }, [props.data.id, loadInitalMessages])
 
+    function switchToEditMode(){
+        props.changeContentOption("edit")
+    }
     const handleSendMessage = (e) => {
         e.preventDefault()
         let content = input
@@ -67,7 +70,6 @@ export function ChatContent(props) {
     }
 
     const messages_content = messages.map((e) => {
-        console.log(e)
         return (<p>{e.content} ~~ {e.author.username}</p>)
     })
     const apiLoadingTag = returnWaitIfLoading(apiLoading, null)
@@ -81,6 +83,7 @@ export function ChatContent(props) {
                 <input type="text" value={input} onChange={handleMessageInput} />
                 {button}
             </form>
+            <button onClick={switchToEditMode}>Edit chat</button>
         </div>
     );
 }

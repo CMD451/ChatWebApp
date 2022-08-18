@@ -47,7 +47,7 @@ export function UsersSelect(props) {
     }
     function optionsToUsers(optionsArray) {
         return optionsArray.map((value) => {
-            return value.value
+            return {id:value.value,username:value.label}
         })
     }
     async function loadOptions() {
@@ -77,6 +77,8 @@ export function UsersSelect(props) {
                 })
                 new_options = e
                 break;
+            default:
+                break
         }
         setSelectedOptions(new_options);
         if (props.onUsersChange) {
@@ -86,9 +88,10 @@ export function UsersSelect(props) {
     useEffect(() => {
         if (props.initial) {
             let initalOptions = usersToOptions(props.initial)
+            console.log("useEffect")
             setSelectedOptions(initalOptions)
         }
-    }, []);
+    }, [props.initial]);
     return (
         <div className="parentDiv">
             UsersSelect
