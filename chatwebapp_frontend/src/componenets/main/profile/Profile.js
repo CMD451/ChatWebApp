@@ -8,8 +8,7 @@ export function Profile() {
   const {user,setUser} = React.useContext(UserContext);
   console.log(user)
   return (
-    <div className="content">
-        Profile
+    <div className="profile-form">
         <ProfileImageForm userData = {user} setUser={setUser} />
         <ProfileForm userData = {user}/>
     </div>

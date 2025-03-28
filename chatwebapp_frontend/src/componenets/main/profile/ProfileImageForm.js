@@ -14,7 +14,6 @@ export function ProfileImageForm(props){
 
   
     function uploadImageRequest(data){
-        console.log(data)
         setIsLoading(true)
         uploadProfileImage(data)
         .then((response)=>{
@@ -50,7 +49,11 @@ export function ProfileImageForm(props){
                 return null
             }
             return(
-                <img src={uri} alt="profile"/>
+                <div className="profile-image-container" >
+                    <img className="profile-image" src={uri} alt="profile"/>
+                    <h4>Your profile picture</h4>
+                </div>
+                
             )  
     }
    

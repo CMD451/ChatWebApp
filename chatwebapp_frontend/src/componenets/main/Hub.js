@@ -5,6 +5,7 @@ import { returnLoading,setTheme } from '../util/util';
 import { useEffect, useState } from "react";
 import { getCurrentUser } from '../../lookup/lookup';
 import React from 'react';
+import { useNavigate } from "react-router";
 
 export const UserContext = React.createContext({
     user:null,
@@ -20,20 +21,22 @@ export function Hub() {
     const options = { "profile": <Profile />, "chat": <ChatHub /> }
     const optionsCaptions = [{'option':'profile','caption':"Profile"},{'option':'chat','caption':"Chat"}]
     let activeOption = (isLoading ? returnLoading() : options[active])
+    let navigate = useNavigate();
     useEffect(() => {
         getCurrentUser()
             .then((response) => {
                 if (response.status === 200) {
                     setUser(response.body)
                     const profile = response.body.profile
-                    console.log("setting theme")
                     setTheme(profile.backgroundColor,profile.secondaryColor)
-                    console.log(document.documentElement)
                     setIsLoading(false)
                 }
             })
     }, [])
     function singOut() {
+        window.localStorage.removeItem("token")
+        window.localStorage.removeItem("refresh")
+        navigate("/")
 
     }
     function generateOptions(){

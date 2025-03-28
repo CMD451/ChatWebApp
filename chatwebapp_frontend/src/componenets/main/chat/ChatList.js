@@ -34,7 +34,7 @@ export function ChatList(props) {
     return (
         <React.Fragment>
             <div className="menuItem">
-                <button onClick={handleCreateButton}>Stwórz nowy chat</button>
+                <button onClick={handleCreateButton}>Create new chat</button>
             </div>
             {list}
         </React.Fragment>

@@ -95,10 +95,9 @@ export function ChatForm(props) {
         setName(value)
     }
     const button = returnWaitIfLoading(isLoading, (
-        <button onClick={handleButton}>Super!</button>
+        <button onClick={handleButton}>Create!</button>
     ))
     const buildSelectTag = useCallback(() => {
-        console.log("again")
         if (props.edit) {
             return (
                 <UsersSelect onUsersChange={handleUsersChange} initial={props.data.members} />
